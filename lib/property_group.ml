@@ -23,7 +23,7 @@ and property_of_xml xml =
         let buffer = Buffer.create 100 in
 
         String.split_on_char ' ' s
-        |> List.iter Fun.(compose (Buffer.add_uint8 buffer) int_of_string);
+        |> List.iter (fun num -> Buffer.add_uint8 buffer @@ int_of_string num);
 
         `Binary (Buffer.contents buffer)
     | None -> `Variable s
