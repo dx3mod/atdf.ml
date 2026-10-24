@@ -1,3 +1,0 @@
-[submodule "pack/avr-registers"]
-	path = pack/avr-registers
-	url = https://github.com/luqasz/avr-registers.git
