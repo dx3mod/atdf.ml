@@ -1,18 +1,14 @@
 type t = {
   name : string;
-  architecture : [ `AVR8 | `AVR32 | `AVR_XMEGA ];
+  architecture : [ `AVR8 | `AVR8X | `AVR32 | `AVR_XMEGA ];
   family : [ `Tiny | `Mega | `XMega | `Unknown of string ];
-  (* "tinyAVR"
-ATtiny серия
-"megaAVR"
-ATmega серия
-"xmega" *)
   address_spaces : Address_space.t list;
   peripherals : Peripheral_module.t list;
   interrupts : Interrupt.t list;
   interfaces : Interface.t list;
   property_groups : Property_group.t list;
 }
+[@@deriving show]
 
 let of_xml xml =
   Xml_decoder.assert_element "device" xml;
@@ -21,6 +17,7 @@ let of_xml xml =
   and architecture =
     match Xml_decoder.(attribute "architecture" string xml) with
     | "AVR8" -> `AVR8
+    | "AVR8X" -> `AVR8X
     | "AVR32" -> `AVR32
     | "AVR-XMEGA" -> `AVR_XMEGA
     | family ->

@@ -6,6 +6,7 @@ type t = {
   size : int;
   segments : Memory_segment.t list;
 }
+[@@deriving show]
 
 let of_xml xml =
   Xml_decoder.assert_element "address-space" xml;

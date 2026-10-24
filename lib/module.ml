@@ -1,6 +1,6 @@
 module Value_group = struct
   type t = { name : string; caption : string; values : value list }
-  and value = { name : string; caption : string; value : int }
+  and value = { name : string; caption : string; value : int } [@@deriving show]
 
   let rec of_xml xml =
     Xml_decoder.assert_element "value-group" xml;
@@ -22,16 +22,25 @@ module Value_group = struct
 end
 
 module Register_group = struct
-  type t = { name : string; caption : string; registers : Register.t list }
+  type t = {
+    name : string;
+    caption : string;
+    registers : Register.t list;
+    groups : t list;
+  }
+  [@@deriving show]
 
-  let of_xml xml =
+  let rec of_xml xml =
     Xml_decoder.assert_element "register-group" xml;
 
     let name = Xml_decoder.(attribute "name" string xml)
-    and caption = Xml_decoder.(attribute "caption" string xml)
-    and registers = Xml_decoder.children Register.of_xml xml in
+    and caption =
+      Xml_decoder.(attribute_opt "caption" string xml)
+      |> Option.value ~default:""
+    and registers = Xml_decoder.children' "register" Register.of_xml xml
+    and groups = Xml_decoder.children' "register-group" of_xml xml in
 
-    { name; caption; registers }
+    { name; caption; registers; groups }
 end
 
 type t = {
@@ -40,6 +49,7 @@ type t = {
   register_groups : Register_group.t list;
   value_groups : Value_group.t list;
 }
+[@@deriving show]
 
 let of_xml xml =
   Xml_decoder.assert_element "module" xml;

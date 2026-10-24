@@ -1,11 +1,12 @@
 type t = {
   order_code : string;
   package : string;
-  pinout : string;
+  pinout : string option;
   speed_max : int;
   vcc : float * float;
   temperature : int * int;
 }
+[@@deriving show]
 
 let of_xml xml =
   Xml_decoder.assert_element "variant" xml;
@@ -14,7 +15,7 @@ let of_xml xml =
   and temperature =
     Xml_decoder.(attribute "tempmin" int xml, attribute "tempmax" int xml)
   and speed_max = Xml_decoder.(attribute "speedmax" int xml)
-  and pinout = Xml_decoder.(attribute "pinout" string xml)
+  and pinout = Xml_decoder.(attribute_opt "pinout" string xml)
   and package = Xml_decoder.(attribute "package" string xml)
   and vcc =
     Xml_decoder.(attribute "vccmin" float xml, attribute "vccmax" float xml)

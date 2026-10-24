@@ -4,6 +4,7 @@ type t = {
   modules : Module.t list;
   pinouts : Pinout.t list;
 }
+[@@deriving show]
 
 let of_xml xml =
   Xml_decoder.assert_element "avr-tools-device-file" xml;
@@ -11,7 +12,10 @@ let of_xml xml =
   let variants = Xml_decoder.(child "variants" (children Variant.of_xml) xml)
   and devices = Xml_decoder.(child "devices" (children Device.of_xml) xml)
   and modules = Xml_decoder.(child "modules" (children Module.of_xml) xml)
-  and pinouts = Xml_decoder.(child "pinouts" (children Pinout.of_xml) xml) in
+  and pinouts =
+    Xml_decoder.(child_opt "pinouts" (children Pinout.of_xml) xml)
+    |> Option.value ~default:[]
+  in
 
   { variants; devices; modules; pinouts }
 

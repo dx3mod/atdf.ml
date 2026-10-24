@@ -1,5 +1,10 @@
 type t = { name : string; properties : property list }
-and property = { name : string; value : [ `Int of int | `Binary of string ] }
+
+and property = {
+  name : string;
+  value : [ `Int of int | `Binary of string | `Variable of string ];
+}
+[@@deriving show]
 
 let rec of_xml xml =
   Xml_decoder.assert_element "property-group" xml;
@@ -14,13 +19,14 @@ and property_of_xml xml =
 
   let value s =
     match int_of_string_opt s with
-    | None ->
+    | None when String.length s >= 8 ->
         let buffer = Buffer.create 100 in
 
         String.split_on_char ' ' s
-        |> List.iter (Fun.compose (Buffer.add_uint8 buffer) int_of_string);
+        |> List.iter Fun.(compose (Buffer.add_uint8 buffer) int_of_string);
 
         `Binary (Buffer.contents buffer)
+    | None -> `Variable s
     | Some num -> `Int num
   in
 

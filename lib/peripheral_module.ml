@@ -13,7 +13,7 @@ and register_group = {
   address_space : string;
 }
 
-and signal = { group : string; func : string; pad : string }
+and signal = { group : string; func : string; pad : string } [@@deriving show]
 
 let rec of_xml xml =
   Xml_decoder.assert_element "module" xml;

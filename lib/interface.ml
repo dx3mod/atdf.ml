@@ -1,4 +1,4 @@
-type t = { name : string; kind : string }
+type t = { name : string; kind : string } [@@deriving show]
 
 let of_xml xml =
   Xml_decoder.assert_element "interface" xml;

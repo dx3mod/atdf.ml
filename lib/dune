@@ -1,3 +1,5 @@
 (library
  (public_name atdf)
- (libraries xml-light))
+ (libraries xml-light)
+ (preprocess
+  (pps ppx_deriving.show)))

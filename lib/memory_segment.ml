@@ -8,6 +8,7 @@ type t = {
   external' : bool;
   page_size : int option;
 }
+[@@deriving show]
 
 let of_xml xml =
   Xml_decoder.assert_element "memory-segment" xml;
