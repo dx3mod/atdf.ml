@@ -11,6 +11,7 @@ depends: [
   "dune" {>= "3.20"}
   "ocaml" {>= "4.14"}
   "xml-light"
+  "ppx_deriving" {build}
   "odoc" {with-doc}
 ]
 build: [

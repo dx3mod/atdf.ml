@@ -19,6 +19,7 @@
  (depends
   (ocaml
    (>= 4.14))
-  xml-light)
+  xml-light
+  (ppx_deriving :build))
  (tags
   (embedded avr atmel atdf)))

@@ -1,0 +1,20 @@
+(executable
+ (name gen_atdf_pack)
+ (modules gen_atdf_pack)
+ (libraries xml-light atdf))
+
+(library
+ (name atdf_pack)
+ (public_name atdf.pack)
+ (modules atdf_pack)
+ (optional)
+ (libraries atdf))
+
+(rule
+ (deps
+  (source_tree avr-registers/))
+ (targets atdf_pack.ml)
+ (action
+  (with-stdout-to
+   atdf_pack.ml
+   (run %{exe:gen_atdf_pack.exe} avr-registers/atdf/))))

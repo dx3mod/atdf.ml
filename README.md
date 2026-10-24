@@ -8,6 +8,7 @@ ATDF files describe the complete hardware layout of AVR microcontrollers, includ
 **Features**
 
 - Full ATDF v0.3 schema coverage (variants, devices, modules, pinouts)
+- Pre-parsed definitions (pack) for a large number of AVR microcontrollers
 
 
 ## Quick start
@@ -28,6 +29,15 @@ Xml.parse_file "atmega328pb.atdf" |> Atdf.File.of_xml
 
 For more details, see the [API reference](https://ocaml.org/p/atdf/latest/doc/index.html).
 
+#### ATDF pack
+
+Additionally, the `atdf.pack` package provides pre-parsed definitions for a large number of AVR microcontrollers.
+
+```ocaml
+#require "atdf.pack";;
+
+let atdf_file = Atdf_pack.find "atmega328p"
+```
 
 ## License
 
