@@ -1,26 +1,24 @@
-(lang dune 3.24)
+(lang dune 3.20)
 
 (name atdf)
 
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github dx3mod/atdf.ml))
 
-(authors "Author Name <author@example.com>")
+(authors "Mikhail Lopatin <dx3mod@bk.ru>")
 
-(maintainers "Maintainer Name <maintainer@example.com>")
+(maintainers "Mikhail Lopatin <dx3mod@bk.ru>")
 
-(license LICENSE)
-
-(documentation https://url/to/documentation)
+(license MIT)
 
 (package
  (name atdf)
- (synopsis "A short synopsis")
- (description "A longer description")
- (depends ocaml)
+ (synopsis "Atmel's ATDF files parsing library")
+ (depends
+  (ocaml
+   (>= 4.14))
+  xml-light)
  (tags
-  ("add topics" "to describe" your project)))
-
-; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
+  (embedded avr atmel atdf)))
